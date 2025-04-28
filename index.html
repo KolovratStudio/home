@@ -760,12 +760,11 @@ Website: https://kolovratstudio.github.io/home<br>
     </footer>
     
     <script>
-    // Mobile navigation menu toggle
-    const menuBtn = document.querySelector('.menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    const closeBtn = document.querySelector('.close-btn');
+   const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+const closeBtn = document.querySelector('.close-btn');
 
-  menuBtn.addEventListener('click', function() {
+menuBtn.addEventListener('click', function() {
   navLinks.classList.toggle('active');
   if (navLinks.classList.contains('active')) {
     navLinks.classList.remove('hidden');
@@ -780,6 +779,15 @@ closeBtn.addEventListener('click', function() {
   navLinks.classList.remove('active');
   navLinks.classList.add('hidden');
   navLinks.classList.remove('flex');
+});
+
+// 🆕 Add this part after closeBtn:
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', function() {
+    navLinks.classList.remove('active');
+    navLinks.classList.add('hidden');
+    navLinks.classList.remove('flex');
+  });
 });
 
   // Popup logic
