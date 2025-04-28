@@ -59,6 +59,12 @@
       box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
     }
     .kolovrat-symbol { filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+         /* Only adding new / important changes */
+        .menu-btn { display: block; }
+        .nav-links {
+          transition: right 0.5s ease;
+        }
+
   </style>
 </head>
 <body class="antialiased">
@@ -759,135 +765,131 @@ Website: https://kolovratstudio.github.io/home<br>
         </div>
     </footer>
     
-    <script>
-   const menuBtn = document.querySelector('.menu-btn');
+<script>
+const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
 const closeBtn = document.querySelector('.close-btn');
 
-menuBtn.addEventListener('click', function() {
-  navLinks.classList.toggle('active');
-  if (navLinks.classList.contains('active')) {
-    navLinks.classList.remove('hidden');
-    navLinks.classList.add('flex');
-  } else {
-    navLinks.classList.add('hidden');
-    navLinks.classList.remove('flex');
-  }
+// Mobile menu open
+menuBtn.addEventListener('click', () => {
+  navLinks.classList.add('active');
+  navLinks.classList.remove('hidden');
+  navLinks.classList.add('flex');
 });
 
-closeBtn.addEventListener('click', function() {
+// Mobile menu close
+closeBtn.addEventListener('click', () => {
   navLinks.classList.remove('active');
   navLinks.classList.add('hidden');
   navLinks.classList.remove('flex');
 });
 
-// 🆕 Add this part after closeBtn:
+// Close menu when clicking a link
 document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', function() {
+  link.addEventListener('click', () => {
     navLinks.classList.remove('active');
     navLinks.classList.add('hidden');
     navLinks.classList.remove('flex');
   });
 });
 
-  // Popup logic
-  const popupOverlay = document.getElementById('popup-overlay');
-  const popupTitle = document.getElementById('popup-title');
-  const popupText = document.getElementById('popup-text');
-  const closePopup = document.getElementById('close-popup');
+// Popup logic
+const popupOverlay = document.getElementById('popup-overlay');
+const popupTitle = document.getElementById('popup-title');
+const popupText = document.getElementById('popup-text');
+const closePopup = document.getElementById('close-popup');
+const popupContent = popupOverlay.querySelector('.bg-gray-900'); // MOVED here, correct order
 
-  function openPopup(title, text) {
-    popupTitle.textContent = title;
-    popupText.innerHTML = text;
-    popupOverlay.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Prevent background scroll
-  }
+function openPopup(title, text) {
+  popupTitle.textContent = title;
+  popupText.innerHTML = text;
+  popupOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
 
-  closePopup.addEventListener('click', () => {
+closePopup.addEventListener('click', () => {
+  popupOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+});
+
+popupOverlay.addEventListener('click', (e) => {
+  if (e.target === popupOverlay) {
     popupOverlay.classList.add('hidden');
-    document.body.style.overflow = ''; // Re-enable background scroll
-  });
-    popupOverlay.addEventListener('click', (e) => {
-        if (e.target === popupOverlay) {
-            popupOverlay.classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-    });
-  // Smooth scrolling
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      navLinks.classList.remove('active');
-      navLinks.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+});
 
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+// Make popup scrollable
+popupContent.classList.add('overflow-y-auto', 'max-h-[90vh]');
 
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80,
-          behavior: 'smooth'
-                });
-            }
-        });
-    });
-        
-         // Make popup menus scrollable
-    const popupOverlay = document.getElementById('popup-overlay');
-    const popupContent = popupOverlay.querySelector('.bg-gray-900');
-    popupContent.classList.add('overflow-y-auto', 'max-h-[90vh]');
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    navLinks.classList.remove('active');
+    navLinks.classList.add('hidden');
+    navLinks.classList.remove('flex'); // 🆕 cleaner
 
-    // Fade-in animation on scroll
-    const fadeElements = document.querySelectorAll('.fade-in');
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
 
-    const fadeInOnScroll = function() {
-        for (let i = 0; i < fadeElements.length; i++) {
-            const elem = fadeElements[i];
-            const distInView = elem.getBoundingClientRect().top - window.innerHeight + 100;
-            if (distInView < 0) {
-                elem.style.opacity = '1';
-                elem.style.transform = 'translateY(0)';
-            }
-        }
-    };
-
-    for (let i = 0; i < fadeElements.length; i++) {
-        fadeElements[i].style.opacity = '0';
-        fadeElements[i].style.transform = 'translateY(20px)';
-        fadeElements[i].style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: 'smooth'
+      });
     }
+  });
+});
 
-    window.addEventListener('scroll', fadeInOnScroll);
-    window.addEventListener('load', fadeInOnScroll);
+// Fade-in on scroll
+const fadeElements = document.querySelectorAll('.fade-in');
+fadeElements.forEach(elem => {
+  elem.style.opacity = '0';
+  elem.style.transform = 'translateY(20px)';
+  elem.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+});
 
-    // Parallax effect
-    window.addEventListener('scroll', function() {
-        const scrollPosition = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.parallax-bg');
+const fadeInOnScroll = function() {
+  fadeElements.forEach(elem => {
+    const distInView = elem.getBoundingClientRect().top - window.innerHeight + 100;
+    if (distInView < 0) {
+      elem.style.opacity = '1';
+      elem.style.transform = 'translateY(0)';
+    }
+  });
+};
 
-        parallaxElements.forEach(function(element) {
-            element.style.backgroundPositionY = (scrollPosition * 0.5) + 'px';
-        });
-    });
+window.addEventListener('scroll', fadeInOnScroll);
+window.addEventListener('load', fadeInOnScroll);
 
-    // Mouse move effects
-    document.addEventListener('mousemove', function(e) {
-        const cards = document.querySelectorAll('.card');
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
+// Parallax effect
+window.addEventListener('scroll', () => {
+  const scrollPosition = window.pageYOffset;
+  document.querySelectorAll('.parallax-bg').forEach(element => {
+    element.style.backgroundPositionY = (scrollPosition * 0.5) + 'px';
+  });
+});
 
-        cards.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const cardX = (e.clientX - rect.left) / rect.width;
-            const cardY = (e.clientY - rect.top) / rect.height;
+// Mouse move card shadow effect
+document.addEventListener('mousemove', function(e) {
+  const cards = document.querySelectorAll('.card');
+  const x = e.clientX / window.innerWidth;
+  const y = e.clientY / window.innerHeight;
 
-            const rotateX = (0.5 - cardY) * 10;
-            const rotateY = (cardX - 0.5) * 10;
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const cardX = (e.clientX - rect.left) / rect.width;
+    const cardY = (e.clientY - rect.top) / rect.height;
 
-            card.style.boxShadow = `${-rotateY * 2}px ${rotateX * 2}px 20px rgba(0, 0, 0, 0.3)`;
-        });
-    });
-    </script>
+    const rotateX = (0.5 - cardY) * 10;
+    const rotateY = (cardX - 0.5) * 10;
+
+    card.style.boxShadow = `${-rotateY * 2}px ${rotateX * 2}px 20px rgba(0, 0, 0, 0.3)`;
+  });
+});
+</script>
+
 </body>
 </html>
