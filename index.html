@@ -34,24 +34,24 @@
     .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
     .fade-in { animation: fadeIn 1s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .menu-btn { display: none; }
-    @media (max-width: 768px) {
-      .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%; /* Start hidden */
-        width: 70%;
-        height: 100vh;
-        background: rgba(10, 14, 23, 0.95);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: right 0.4s ease; /* animate slide */
-        z-index: 90;
-        border-left: 1px solid rgba(212, 175, 55, 0.2);
-      }
-      .nav-links.active {
-        right: 0; /* show menu */
+          .menu-btn { display: block; }
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(10, 14, 23, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease;
+                z-index: 90;
+                border-left: 1px solid rgba(212, 175, 55, 0.2);
+            }
+            .nav-links.active {
+                right: 0;
       }
     }
     }
@@ -75,35 +75,32 @@
   </style>
 </head>
 <body class="antialiased">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center">
-                <div class="kolovrat-symbol mr-3">
-                    <img src="logo_symbol.png" alt="Kolovrat Symbol" width="40" height="40">
-                </div>
-
-                <a href="#" class="logo-font text-3xl text-gold-500 hover:text-gold-300 transition-colors">
-                    <span class="text-gold-400">Kolovrat</span> <span class="text-white">Studio</span>
-                </a>
-            </div>
-            
-            <div class="menu-btn text-gold-400 text-2xl cursor-pointer z-100 md:hidden">
-                <i class="fas fa-bars"></i>
-            </div>
-            
-            <ul class="nav-links fixed top-0 right-[-100%] w-2/3 h-screen bg-black/90 flex-col items-center justify-center space-y-8 transition-all duration-500 md:static md:flex md:flex-row md:space-x-8 md:space-y-0 md:w-auto md:h-auto md:bg-transparent">
-                <li class="close-btn text-gold-400 text-2xl cursor-pointer absolute top-5 right-5 md:hidden">
-                    <i class="fas fa-times"></i>
-                </li>
-                <li><a href="#about" class="text-gold-400 hover:text-white hover:font-bold transition-colors">About</a></li>
-                <li><a href="#game" class="text-gold-400 hover:text-white hover:font-bold transition-colors">Our Game</a></li>
-                <li><a href="#media" class="text-gold-400 hover:text-white hover:font-bold transition-colors">Media</a></li>
-                <li><a href="#contact" class="text-gold-400 hover:text-white hover:font-bold transition-colors">Contact</a></li>
-                <li><a href="#community" class="text-gold-400 hover:text-white hover:font-bold transition-colors">Community</a></li>
-            </ul>
+<nav class="fixed w-full z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <img src="logo_symbol.png" alt="Kolovrat Logo" class="w-10 h-10 mr-3">
+            <a href="#" class="text-2xl font-bold text-gold-400">Kolovrat Studio</a>
         </div>
-    </nav>
+
+        <!-- Hamburger menu button -->
+        <div class="menu-btn text-gold-400 text-3xl cursor-pointer md:hidden">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <!-- Navigation links -->
+        <ul class="nav-links hidden md:flex space-x-8 md:static md:flex-row md:space-x-8">
+            <li class="close-btn text-gold-400 text-3xl cursor-pointer absolute top-6 right-6 md:hidden">
+                <i class="fas fa-times"></i>
+            </li>
+            <li><a href="#about" class="text-gold-400 hover:text-white">About</a></li>
+            <li><a href="#game" class="text-gold-400 hover:text-white">Game</a></li>
+            <li><a href="#media" class="text-gold-400 hover:text-white">Media</a></li>
+            <li><a href="#contact" class="text-gold-400 hover:text-white">Contact</a></li>
+            <li><a href="#community" class="text-gold-400 hover:text-white">Community</a></li>
+        </ul>
+    </div>
+</nav>
+
     
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center relative overflow-hidden parallax-bg" style="background-image: url('https://i.pinimg.com/originals/36/09/a5/3609a58f09f1c9c87fea4cf875b564b7.gif')">
@@ -779,21 +776,22 @@ const closeBtn = document.querySelector('.close-btn');
 
 // Open mobile menu
 menuBtn.addEventListener('click', () => {
-  navLinks.style.right = "0";
-  navLinks.style.display = "flex"; // 🆕 fix!
+    navLinks.style.right = "0";
+    navLinks.style.display = "flex"; // critical line added
 });
 
 // Close mobile menu
 closeBtn.addEventListener('click', () => {
-  navLinks.style.right = "-100%";
+    navLinks.style.right = "-100%";
 });
 
-// Also close when clicking a nav link
+// Also close mobile menu after clicking any nav link
 document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.style.right = "-100%";
-  });
+    link.addEventListener('click', () => {
+        navLinks.style.right = "-100%";
+    });
 });
+
 // Popup logic
 const popupOverlay = document.getElementById('popup-overlay');
 const popupTitle = document.getElementById('popup-title');
