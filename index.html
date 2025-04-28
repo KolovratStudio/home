@@ -792,7 +792,12 @@ Website: [Your Website URL]<br>
     popupOverlay.classList.add('hidden');
     document.body.style.overflow = ''; // Re-enable background scroll
   });
-
+    popupOverlay.addEventListener('click', (e) => {
+        if (e.target === popupOverlay) {
+            popupOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
   // Smooth scrolling
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
