@@ -368,9 +368,9 @@
                     Witness the dark beauty of our world through these glimpses into Veles' Legacy
                 </p>
             </div>
-            
+    
             <div class="grid md:grid-cols-2 gap-8 mb-12">
-
+    
                 <!-- First video: Static trailer -->
                 <div class="fade-in">
                     <div class="aspect-video rounded-lg overflow-hidden border border-gold-500/30">
@@ -379,67 +379,42 @@
                     <h3 class="text-xl text-white mt-4">Announcement Trailer</h3>
                     <p class="text-gray-400">First look at Veles' Legacy</p>
                 </div>
-
-                <!-- Second video: Latest dynamically fetched -->
+    
+                <!-- Second video: Static link (No API) -->
                 <div id="latest-video-container" class="fade-in">
                     <div class="aspect-video rounded-lg overflow-hidden border border-gold-500/30">
-                        <iframe class="w-full h-full" id="latest-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe class="w-full h-full" src="https://www.youtube.com/watch?v=O0ZrCnsEru4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <h3 class="text-xl text-white mt-4">Latest Video</h3>
+                    <h3 class="text-xl text-white mt-4">More From Us</h3>
                     <p class="text-gray-400">Fresh from the forge</p>
                 </div>
             </div>
-                    <script>
-            const apiKey = 'AIzaSyCgmPQXPKmKRu0NOYulMU-liKk1iHUsM7k'
-            const channelId = 'UC2nD2-Pev3jte_WWLvXQdXw'
-            const maxResults = 1; // Only want the latest video
-
-            async function fetchLatestVideo() {
-                try {
-                    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=${maxResults}`);
-                    const data = await response.json();
-                    
-                    const latestVideoId = data.items[0].id.videoId;
-                    if (latestVideoId) {
-                        const iframe = document.getElementById('latest-video');
-                        iframe.src = `https://www.youtube.com/embed/${latestVideoId}`;
-                    }
-                } catch (error) {
-                    console.error('Error fetching latest YouTube video:', error);
-                }
-            }
-
-            fetchLatestVideo();
-            </script>
-                    <h3 class="text-xl text-white mt-4">Immerse yourself in world of old Gods</h3>
-                    <p class="text-gray-400">Where no cowardice is tolerated and weakness punishable by death</p>
-                </div>
-            </div>
-            
+    
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
                 <div class="fade-in">
                     <div class="aspect-square rounded-lg overflow-hidden border border-gold-500/30 hover:border-gold-500/60 transition-colors cursor-pointer">
-                        <img src="">
+                        <img src="" alt="Image">
                     </div>
                 </div>
                 <div class="fade-in">
                     <div class="aspect-square rounded-lg overflow-hidden border border-gold-500/30 hover:border-gold-500/60 transition-colors cursor-pointer">
-                        <img src="">
+                        <img src="" alt="Image">
                     </div>
                 </div>
                 <div class="fade-in">
                     <div class="aspect-square rounded-lg overflow-hidden border border-gold-500/30 hover:border-gold-500/60 transition-colors cursor-pointer">
-                        <img src="" class="w-full h-full object-cover">
+                        <img src="" class="w-full h-full object-cover" alt="Image">
                     </div>
                 </div>
                 <div class="fade-in">
                     <div class="aspect-square rounded-lg overflow-hidden border border-gold-500/30 hover:border-gold-500/60 transition-colors cursor-pointer">
-                        <img src="">
+                        <img src="" alt="Image">
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gradient-to-b from-black to-gray-900">
