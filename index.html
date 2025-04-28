@@ -36,17 +36,24 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .menu-btn { display: none; }
     @media (max-width: 768px) {
-      .menu-btn { display: block; }
       .nav-links {
-        position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+        position: fixed;
+        top: 0;
+        right: -100%; /* Start hidden */
+        width: 70%;
+        height: 100vh;
         background: rgba(10, 14, 23, 0.95);
-        flex-direction: column; justify-content: center; align-items: center;
-        transition: right 0.5s ease; z-index: 90;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.4s ease; /* animate slide */
+        z-index: 90;
         border-left: 1px solid rgba(212, 175, 55, 0.2);
       }
-      .nav-links.active { right: 0; }
-      .nav-links li { margin: 15px 0; }
-      .close-btn { position: absolute; top: 20px; right: 20px; }
+      .nav-links.active {
+        right: 0; /* show menu */
+      }
+    }
     }
     input, textarea {
       background: rgba(26, 45, 82, 0.3);
@@ -85,7 +92,7 @@
                 <i class="fas fa-bars"></i>
             </div>
             
-            <ul class="nav-links hidden md:flex flex-col md:flex-row absolute md:static top-0 right-0 bg-black/90 md:bg-transparent w-2/3 md:w-auto h-screen md:h-auto items-center justify-center transition-all duration-300 z-40">
+            <ul class="nav-links flex md:flex space-x-8 md:static md:flex-row md:justify-end">
 
                 <li class="close-btn text-gold-400 text-2xl cursor-pointer absolute top-5 right-5 md:hidden">
                     <i class="fas fa-times"></i>
@@ -771,23 +778,20 @@ const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
 const closeBtn = document.querySelector('.close-btn');
 
-// Open menu
+// Open the mobile menu
 menuBtn.addEventListener('click', () => {
-  navLinks.classList.toggle('hidden');
-  navLinks.classList.toggle('flex');
+  navLinks.classList.toggle('active');
 });
 
-// Close menu
+// Close when clicking X
 closeBtn.addEventListener('click', () => {
-  navLinks.classList.add('hidden');
-  navLinks.classList.remove('flex');
+  navLinks.classList.remove('active');
 });
 
-// Close when clicking any link
+// Close when clicking a link inside
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
-    navLinks.classList.add('hidden');
-    navLinks.classList.remove('flex');
+    navLinks.classList.remove('active');
   });
 });
 
