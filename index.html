@@ -780,6 +780,7 @@ const closeBtn = document.querySelector('.close-btn');
 // Open mobile menu
 menuBtn.addEventListener('click', () => {
   navLinks.style.right = "0";
+  navLinks.style.display = "flex"; // 🆕 fix!
 });
 
 // Close mobile menu
@@ -793,7 +794,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     navLinks.style.right = "-100%";
   });
 });
-
 // Popup logic
 const popupOverlay = document.getElementById('popup-overlay');
 const popupTitle = document.getElementById('popup-title');
