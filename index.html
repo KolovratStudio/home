@@ -667,8 +667,8 @@ These Terms will be governed by and construed in accordance with the laws of Bos
 If you have any questions or concerns regarding these Terms, please contact us at:<br><br>
 
 Kolovrat Studio<br>
-Email: [Your Contact Email]<br>
-Website: [Your Website URL]<br>
+Email: kolovrat.studio@gmail.com<br>
+Website: https://kolovratstudio.github.io/home<br>
 `;
 
     openPopup('Terms of Service', termsText);
@@ -723,7 +723,7 @@ If you have any questions or concerns about our use of cookies, please contact u
 
 Kolovrat Studio<br>
 Email: kolovrat.studio@gmail.com<br>
-Website: [Your Website URL]<br>
+Website: https://kolovratstudio.github.io/home<br>
 `;
 
     openPopup('Cookie Policy', cookiePolicyText);
@@ -766,14 +766,21 @@ Website: [Your Website URL]<br>
   const closeBtn = document.querySelector('.close-btn');
 
   menuBtn.addEventListener('click', function() {
-    navLinks.classList.toggle('active');
-    navLinks.classList.toggle('hidden');
-  });
+  navLinks.classList.toggle('active');
+  if (navLinks.classList.contains('active')) {
+    navLinks.classList.remove('hidden');
+    navLinks.classList.add('flex');
+  } else {
+    navLinks.classList.add('hidden');
+    navLinks.classList.remove('flex');
+  }
+});
 
   closeBtn.addEventListener('click', function() {
-    navLinks.classList.remove('active');
-    navLinks.classList.add('hidden');
-  });
+  navLinks.classList.remove('active');
+  navLinks.classList.add('hidden');
+  navLinks.classList.remove('flex');
+});
 
   // Popup logic
   const popupOverlay = document.getElementById('popup-overlay');
