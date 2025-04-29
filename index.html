@@ -35,23 +35,23 @@
     .fade-in { animation: fadeIn 1s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
           .menu-btn { display: block; }
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: rgba(10, 14, 23, 0.95);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transition: right 0.4s ease;
-                z-index: 90;
-                border-left: 1px solid rgba(212, 175, 55, 0.2);
-            }
-            .nav-links.active {
-                right: 0;
+       @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: rgba(10, 14, 23, 0.95);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.4s ease;
+        z-index: 90;
+      }
+      .nav-links.show {
+        right: 0;
+
       }
     }
     }
@@ -76,29 +76,29 @@
 </head>
 <body class="antialiased">
 <nav class="fixed w-full z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center">
-            <img src="logo_symbol.png" alt="Kolovrat Logo" class="w-10 h-10 mr-3">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center">
+      <img src="logo_symbol.png" alt="Kolovrat Logo" class="w-10 h-10 mr-3">
             <a href="#" class="text-2xl font-bold text-gold-400">Kolovrat Studio</a>
         </div>
 
         <!-- Hamburger menu button -->
-        <div class="menu-btn text-gold-400 text-3xl cursor-pointer md:hidden">
-            <i class="fas fa-bars"></i>
-        </div>
+       <div class="menu-btn text-gold-400 text-3xl cursor-pointer md:hidden">
+      <i class="fas fa-bars"></i>
+    </div>
 
         <!-- Navigation links -->
-        <ul class="nav-links hidden md:flex space-x-8 md:static md:flex-row md:space-x-8">
-            <li class="close-btn text-gold-400 text-3xl cursor-pointer absolute top-6 right-6 md:hidden">
-                <i class="fas fa-times"></i>
-            </li>
-            <li><a href="#about" class="text-gold-400 hover:text-white">About</a></li>
-            <li><a href="#game" class="text-gold-400 hover:text-white">Game</a></li>
-            <li><a href="#media" class="text-gold-400 hover:text-white">Media</a></li>
-            <li><a href="#contact" class="text-gold-400 hover:text-white">Contact</a></li>
-            <li><a href="#community" class="text-gold-400 hover:text-white">Community</a></li>
-        </ul>
-    </div>
+          <ul class="nav-links hidden md:flex space-x-8">
+      <li class="close-btn text-gold-400 text-3xl cursor-pointer absolute top-6 right-6 md:hidden">
+        <i class="fas fa-times"></i>
+      </li>
+      <li><a href="#about" class="text-gold-400 hover:text-white">About</a></li>
+      <li><a href="#game" class="text-gold-400 hover:text-white">Game</a></li>
+      <li><a href="#media" class="text-gold-400 hover:text-white">Media</a></li>
+      <li><a href="#contact" class="text-gold-400 hover:text-white">Contact</a></li>
+      <li><a href="#community" class="text-gold-400 hover:text-white">Community</a></li>
+    </ul>
+  </div>
 </nav>
 
     
@@ -774,23 +774,33 @@ const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
 const closeBtn = document.querySelector('.close-btn');
 
-// Open mobile menu
+// Open menu
 menuBtn.addEventListener('click', () => {
-    navLinks.style.right = "0";
-    navLinks.style.display = "flex"; // critical line added
+  navLinks.classList.add('show');
+  navLinks.classList.remove('hidden');
+  navLinks.classList.add('flex');
 });
 
-// Close mobile menu
+// Close menu
 closeBtn.addEventListener('click', () => {
-    navLinks.style.right = "-100%";
+  navLinks.classList.remove('show');
+  setTimeout(() => {
+    navLinks.classList.add('hidden');
+    navLinks.classList.remove('flex');
+  }, 400);
 });
 
-// Also close mobile menu after clicking any nav link
+// Close on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.style.right = "-100%";
-    });
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('show');
+    setTimeout(() => {
+      navLinks.classList.add('hidden');
+      navLinks.classList.remove('flex');
+    }, 400);
+  });
 });
+
 
 // Popup logic
 const popupOverlay = document.getElementById('popup-overlay');
